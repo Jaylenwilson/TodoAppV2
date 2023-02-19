@@ -54,6 +54,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
+//  TODO: give the option to enter username or email
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body.user;
