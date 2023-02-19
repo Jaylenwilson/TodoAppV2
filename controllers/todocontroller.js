@@ -7,8 +7,7 @@ const Express = require('express')
 const router = Express.Router()
 // Import the models object in order to create new instances of the Todo model
 const { models } = require('../models');
-// Import json web token
-const jwt = require('jsonwebtoken');
+// Import validateJWT to make sure a user is logged in before making any request
 const validateJWT = require('../middleware/validate-session.js');
 
 router.post('/createtodo', validateJWT, async (req, res) => {
@@ -39,6 +38,33 @@ router.post('/createtodo', validateJWT, async (req, res) => {
         else {
             res.status(500).json({
                 message: `Sorry we could not create your todo ${err}`
+            });
+        };
+    }
+})
+
+router.get('/all/:userId', validateJWT, async (req, res) => {
+    const userId = req.params.userId
+    try {
+        const todos = await models.TodoModel.findAll({
+            where: {
+                userId: userId
+            }
+
+        })
+        // TODO: sort todos by priority below
+
+    } catch (err) {
+
+        if (err.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                success: false,
+                msg: err.errors.map(e => e.message)
+            })
+        }
+        else {
+            res.status(500).json({
+                msg: `Sorry we could not find your todo's ${err}`
             });
         };
     }
