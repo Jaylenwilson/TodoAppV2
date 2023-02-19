@@ -1,16 +1,16 @@
 // object destructuring is used to extrapolate the DataTypes object from the sequelize dependency. 
-const { Datatypes } = require('sequelize')
+const { DataTypes } = require('sequelize')
 //  import the connection to our database that we set up in the db.js. This will unlock methods from the sequelize connection that we can call upon.
 const db = require("../db")
 const Todo = db.define("todo", {
     id: {
-        type: Datatypes.UUID,
+        type: DataTypes.UUID,
         primaryKey: true,
-        defaultValu: Datatypes.UUIDV4,
+        defaultValu: DataTypes.UUIDV4,
         allowNull: false
     },
     title: {
-        type: Datatypes.STRING(155),
+        type: DataTypes.STRING(155),
         allowNull: false,
         validate: {
             notNull: {
@@ -19,8 +19,11 @@ const Todo = db.define("todo", {
         }
     },
     description: {
-        type: Datatypes.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: true
     },
+    priority: {
+        type: DataTypes.INTEGER
+    }
 })
 module.exports = Todo
