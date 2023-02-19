@@ -16,7 +16,7 @@ const controllers = require("./controllers")
 app.use("/", controllers.usercontroller)
 
 app.use("/todo", controllers.todocontroller)
-app.use("/category", controllers.todocategorycontroller)
+app.use("/project", controllers.projectcontroller)
 
 app.use(middleware.validateSession)
 

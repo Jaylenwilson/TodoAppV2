@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db')
 
-const TodoCategory = db.define('todocategory', {
+const Project = db.define('project', {
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -21,4 +21,4 @@ const TodoCategory = db.define('todocategory', {
 
 })
 
-module.exports = TodoCategory
+module.exports = Project
