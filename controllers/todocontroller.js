@@ -5,3 +5,6 @@ const Express = require('express')
 // Create a new variable called . Since the  variable gives us access into the express framework, we can access express properties and methods by calling . Therefore, when we call , we are using the  variable to access the 
 //  method.
 const router = Express.Router()
+
+
+module.exports = router

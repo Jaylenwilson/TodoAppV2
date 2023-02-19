@@ -8,7 +8,7 @@ const middleware = require('./middleware')
 // This method is used to parse the incoming requests with JSON payloads and is based upon the bodyparser. This method returns the middleware that only parses JSON and only looks at the requests where the content-type header matches the type option.
 app.use(Express.json())
 app.use(require("./middleware/headers"))
-
+app.use(Express.json())
 // Import the controllers as a bundle through the object that we just exported in the index.js and store it in a variable called controllers allowing us to access each controller by using dot notation
 const controllers = require("./controllers")
 
