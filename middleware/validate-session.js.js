@@ -19,19 +19,10 @@ const validateJWT = async (req, res, next) => {
                 }
             });
 
-            let foundAdmin = await models.AdminModel.findOne({
-                where: {
-                    id: payload.id
-                }
-            })
-
             if (foundUser) {
                 req.user = foundUser;
                 next();
 
-            } else if (foundAdmin) {
-                req.admin = foundAdmin
-                next();
             } else {
                 res.status(400).send({
                     message: 'Not Authorized'

@@ -6,7 +6,7 @@ const Todo = db.define("todo", {
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
-        defaultValu: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false
     },
     title: {
@@ -24,6 +24,10 @@ const Todo = db.define("todo", {
     },
     priority: {
         type: DataTypes.INTEGER
+    },
+    completed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 module.exports = Todo
