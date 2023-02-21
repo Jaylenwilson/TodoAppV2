@@ -1,4 +1,4 @@
-// This code above imports the necessary packages and dependencies for the application to run. Express is imported and an instance of the Express framework 
+// This code imports the necessary packages and dependencies for the application to run. Express is imported and an instance of the Express framework 
 // is created and stored in the router variable. models are imported to create new instances of the Todo model. validateJWT is imported to make 
 // sure a user is authenticated before making any request.
 const Express = require('express');
@@ -16,7 +16,7 @@ const validateJWT = require('../middleware/validate-session.js');
 // HTTP POST request to create a new todo
 router.post('/createtodo', validateJWT, async (req, res) => {
     // extract todo properties from request body
-    const { title, description, priority, completed } = req.body.todo
+    const { title, description, priority, completed, dueDate } = req.body.todo
 
     try {
         // create new todo record in the database
@@ -24,7 +24,8 @@ router.post('/createtodo', validateJWT, async (req, res) => {
             title: title,
             description: description,
             priority: priority,
-            completed: completed
+            completed: completed,
+            dueDate: dueDate.toDateString()
         })
             .then(
                 todo => {
