@@ -53,6 +53,21 @@ const User = db.define("user", {
                 msg: "Password cannot be blank"
             }
         }
+    },
+
+    confirmPassword: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'Please confirm your password'
+            },
+            matchesPassword: function (value) {
+                if (value !== this.password) {
+                    throw new Error('Passwords do not match')
+                }
+            }
+        }
     }
 }, {
     // Sequelize hook for running a function after validating the model.
@@ -61,6 +76,14 @@ const User = db.define("user", {
         afterValidate: function (user) {
             user.password = bcrypt.hashSync(user.password, 10)
         },
+    },
+
+    validate: {
+        passwordsMatch: function () {
+            if (this.password !== this.confirmPassword) {
+                throw new Error('Passwords do not match')
+            }
+        }
     }
 })
 
