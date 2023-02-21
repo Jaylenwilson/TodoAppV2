@@ -12,7 +12,8 @@ router.post('/register', async (req, res) => {
         {
             username,
             email,
-            password
+            password,
+            confirmPassword
         } = req.body.users
 
     try {
@@ -21,6 +22,7 @@ router.post('/register', async (req, res) => {
             username: username,
             email: email,
             password: password,
+            confirmPassword: confirmPassword
         })
             .then(
 
