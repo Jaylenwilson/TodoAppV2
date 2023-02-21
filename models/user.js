@@ -1,7 +1,13 @@
+// Import DataTypes from sequelize for specifying field types.
 const { DataTypes } = require("sequelize");
+
+// Import the database connection
 const db = require("../db");
 
+// Define the User model and its fields using Sequelize's define() method.
 const User = db.define("user", {
+
+    // A unique ID field for each user. A UUID field is used for uniqueness.
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -9,12 +15,15 @@ const User = db.define("user", {
         allowNull: false
     },
 
+    // A field for the username of each user. It should be a string and is required.
     username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
 
+    // A field for the email address of each user. It should be a string and is required and unique.
+    // Validation is added to make sure it is a valid email address.
     email: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -28,26 +37,26 @@ const User = db.define("user", {
             }
         }
     },
+
+    // A field for the password of each user. It should be a string and is required.
+    // Validation is added to make sure it is a strong password.
+    // After validation, the password is hashed using bcrypt.
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-
         validate: {
             is: {
                 args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$/,
-                msg: "Password must be at least 8 characters at least one upper case letter 1 lower case and one symbol"
+                msg: "Password must be at least 8 characters long contain at least one lowercase letter [a-z] contain at least one uppercase letter [A-Z] contain at least one digit [\d] contain at least one special character from the set of characters [#$^+=!*()@%&]"
             },
             notNull: {
-                msg: "Must create a password"
+                msg: "Password cannot be blank"
             }
         }
     }
 }, {
-    /**
-     * * * Sequelize Hook
-     * allows access to sequelize hooks
-     * these are life cycle methods in this example the value a user inputs for password is encrypted AFTER VALIDATION
-     */
+    // Sequelize hook for running a function after validating the model.
+    // Here, it is used to hash the password using bcrypt before saving the user.
     hooks: {
         afterValidate: function (user) {
             user.password = bcrypt.hashSync(user.password, 10)
@@ -55,4 +64,5 @@ const User = db.define("user", {
     }
 })
 
+// Export the User model.
 module.exports = User

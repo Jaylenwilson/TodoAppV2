@@ -9,7 +9,7 @@ const Project = db.define('project', {
         allowNull: false,
     },
 
-    project: {
+    projectName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
