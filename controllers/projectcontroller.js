@@ -44,7 +44,12 @@ router.get('/allprojects/:userId', validateJWT, async (req, res) => {
         await models.ProjectModel.findAll({
             where: {
                 userId: userId
-            }
+            },
+            include: [
+                {
+                    model: models.TodoModel
+                }
+            ]
         }).then(
             projects => {
                 res.status(200).send({

@@ -25,8 +25,9 @@ router.post('/createtodo', validateJWT, async (req, res) => {
             description: description,
             priority: priority,
             completed: completed,
-            dueDate: dueDate.toDateString(),
-            projectId: projectId
+            dueDate: dueDate ? new Date(dueDate).toISOString() : null,
+            projectId: projectId,
+            userId: req.user.id
         })
             .then(
                 todo => {
@@ -70,7 +71,7 @@ router.get('/all/:userId', validateJWT, async (req, res) => {
             where: {
                 userId: userId
             },
-            order: [['priority', 'ASC']] // sort the todos in ascending order of priority
+            order: [['priority', 'ASC']], // sort the todos in ascending order of priority
         }).then(
             todos => {
                 res.status.send({ // send the todos and a success message if the promise resolves
