@@ -4,6 +4,9 @@ const { DataTypes } = require("sequelize");
 // Import the database connection
 const db = require("../db");
 
+const bcrypt = require('bcryptjs');
+
+
 // Define the User model and its fields using Sequelize's define() method.
 const User = db.define("user", {
 
@@ -75,6 +78,7 @@ const User = db.define("user", {
     hooks: {
         afterValidate: function (user) {
             user.password = bcrypt.hashSync(user.password, 10)
+            user.confirmPassword = bcrypt.hashSync(user.confirmPassword, 10)
         },
     },
 

@@ -16,7 +16,7 @@ router.post('/projectcreate', validateJWT, async (req, res) => {
                 project => {
                     res.status(200).send({
                         project: project,
-                        msg: `${project.projectName} has been created`
+                        msg: `${projectName} has been created`
                     })
                 }
             )

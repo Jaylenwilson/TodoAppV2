@@ -27,6 +27,7 @@ router.post('/register', async (req, res) => {
             .then(
 
                 user => {
+                    console.log(user)
                     // Creating and returning a JSON Web Token if user is successfully created
                     let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
 
