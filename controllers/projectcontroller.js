@@ -36,5 +36,29 @@ router.post('/projectcreate', validateJWT, async (req, res) => {
     }
 })
 
+router.get('/allprojects/:userId', validateJWT, async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        await models.ProjectModel.findAll({
+            where: {
+                userId: userId
+            }
+        }).then(
+            projects => {
+                res.status(200).send({
+                    projects: projects,
+                    msg: 'your projects have been recieved'
+                })
+            }
+        )
+    } catch (err) {
+        // if there's any other error, return a 500 response with an error message
+        res.status(500).json({
+            msg: `Sorry we could not find your todo's ${err}`
+        });
+    };
+
+})
+
 
 module.exports = router
