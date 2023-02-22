@@ -141,7 +141,12 @@ router.put('/edit/:id', validateJWT, async (req, res) => {
             title: title,
             description: description,
             priority: priority
-        })
+        },
+            {
+                where: {
+                    id: id
+                }
+            })
 
         // If the update is successful, send a success response with the edited task and a success message.
         res.status(200).send({

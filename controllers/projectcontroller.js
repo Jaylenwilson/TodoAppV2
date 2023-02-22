@@ -52,12 +52,70 @@ router.get('/allprojects/:userId', validateJWT, async (req, res) => {
             }
         )
     } catch (err) {
-        // if there's any other error, return a 500 response with an error message
         res.status(500).json({
             msg: `Sorry we could not find your todo's ${err}`
         });
     };
 
+})
+
+
+router.delete('/deleteproject/:id', validateJWT, async, (req, res) => {
+    const id = req.params.id
+
+    const projectName = req.body.project
+    try {
+        await models.ProjectModel.destroy({
+            where: {
+                id: id
+            }
+        })
+
+        res.status(200).send({
+            msg: `${projectName} has been deleted`
+        })
+    } catch (err) {
+        res.status(500).send({
+            msg: `Could not delete ${projectName}`
+        })
+    }
+
+})
+
+router.put('/editproject/:id', validateJWT, async (req, res) => {
+    const { projectName } = req.body.project
+
+    const id = req.params.id
+
+    try {
+
+        const editedProject = await models.ProjectModel.update({
+            projectName: projectName
+        },
+            {
+                where: {
+                    id: id
+                }
+            }
+        )
+
+        res.status(200).send({
+            editedProject: editedProject,
+            msg: `${projectName} has been edited`
+        })
+
+    } catch (err) {
+        if (err.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                success: false,
+                msg: err.errors.map(e => e.message)
+            })
+        } else {
+            res.status(500).json({
+                message: `Sorry post your product ${err}`
+            });
+        };
+    }
 })
 
 
