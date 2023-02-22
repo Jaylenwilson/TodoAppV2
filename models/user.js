@@ -41,6 +41,7 @@ const User = db.define("user", {
         }
     },
 
+
     // A field for the password of each user. It should be a string and is required.
     // Validation is added to make sure it is a strong password.
     // After validation, the password is hashed using bcrypt.
