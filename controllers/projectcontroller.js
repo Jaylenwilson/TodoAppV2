@@ -10,7 +10,8 @@ router.post('/projectcreate', validateJWT, async (req, res) => {
 
     try {
         await models.ProjectModel.create({
-            projectName: projectName
+            projectName: projectName,
+            userId: req.user.id
         })
             .then(
                 project => {
