@@ -30,7 +30,11 @@ const Todo = db.define('todo', {
     // priority field - integer data type, nullable
     priority: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            min: 1,
+            max: 5
+        }
     },
     // completed field - boolean data type with default value of false, nullable
     completed: {

@@ -42,3 +42,14 @@ dbConnection.authenticate()
     .catch((err) => {
         console.log(`[Server]: server crashed. Error = ${err}`)
     })
+
+// dbConnection.authenticate()
+//     .then(() => dbConnection.sync({ force: true }))
+//     .then(() => {
+//         app.listen(process.env.PORT, () => {
+//             console.log(`[Server]: App is listening on ${process.env.PORT}`);
+//         })
+//     })
+//     .catch((err) => {
+//         console.log(`[Server]: server crashed. Error = ${err}`)
+//     })

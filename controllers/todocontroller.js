@@ -16,7 +16,7 @@ const validateJWT = require('../middleware/validate-session.js');
 // HTTP POST request to create a new todo
 router.post('/createtodo', validateJWT, async (req, res) => {
     // extract todo properties from request body
-    const { title, description, priority, completed, dueDate } = req.body.todo
+    const { title, description, priority, completed, dueDate, projectId } = req.body.todo
 
     try {
         // create new todo record in the database
@@ -25,7 +25,8 @@ router.post('/createtodo', validateJWT, async (req, res) => {
             description: description,
             priority: priority,
             completed: completed,
-            dueDate: dueDate.toDateString()
+            dueDate: dueDate.toDateString(),
+            projectId: projectId
         })
             .then(
                 todo => {
