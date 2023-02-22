@@ -1,9 +1,10 @@
-// User can create, delete, and update a todo category where todos can be stored
+// Required modules
 const Express = require('express');
 const router = Express.Router();
 const { models } = require('../models');
 const validateJWT = require('../middleware/validate-session.js');
 
+// Create a new project
 router.post('/projectcreate', validateJWT, async (req, res) => {
     const { projectName } = req.body.project
 
@@ -15,12 +16,12 @@ router.post('/projectcreate', validateJWT, async (req, res) => {
                 project => {
                     res.status(200).send({
                         project: project,
-                        msg: `${project} has been created`
+                        msg: `${project.projectName} has been created`
                     })
                 }
             )
     } catch (err) {
-        // handle validation errors
+        // Handle validation errors
         if (err.name === 'SequelizeValidationError') {
             return res.status(400).json({
                 success: false,
@@ -28,7 +29,7 @@ router.post('/projectcreate', validateJWT, async (req, res) => {
             })
         }
         else {
-            // handle all other errors
+            // Handle all other errors
             res.status(500).json({
                 message: `Sorry we could not create your project ${err}`
             });
@@ -36,6 +37,7 @@ router.post('/projectcreate', validateJWT, async (req, res) => {
     }
 })
 
+// Get all projects for a user
 router.get('/allprojects/:userId', validateJWT, async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -47,20 +49,19 @@ router.get('/allprojects/:userId', validateJWT, async (req, res) => {
             projects => {
                 res.status(200).send({
                     projects: projects,
-                    msg: 'your projects have been recieved'
+                    msg: 'your projects have been received'
                 })
             }
         )
     } catch (err) {
         res.status(500).json({
-            msg: `Sorry we could not find your todo's ${err}`
+            msg: `Sorry we could not find your project ${err}`
         });
     };
-
 })
 
-
-router.delete('/deleteproject/:id', validateJWT, async, (req, res) => {
+// Delete a project by ID
+router.delete('/deleteproject/:id', validateJWT, async (req, res) => {
     const id = req.params.id
 
     const projectName = req.body.project
@@ -79,9 +80,9 @@ router.delete('/deleteproject/:id', validateJWT, async, (req, res) => {
             msg: `Could not delete ${projectName}`
         })
     }
-
 })
 
+// Update a project by ID
 router.put('/editproject/:id', validateJWT, async (req, res) => {
     const { projectName } = req.body.project
 
@@ -112,11 +113,11 @@ router.put('/editproject/:id', validateJWT, async (req, res) => {
             })
         } else {
             res.status(500).json({
-                message: `Sorry post your product ${err}`
+                message: `Sorry we could not update your project ${err}`
             });
         };
     }
 })
 
-
+// Export the router
 module.exports = router
