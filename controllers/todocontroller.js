@@ -74,7 +74,7 @@ router.get('/all/:userId', validateJWT, async (req, res) => {
             order: [['priority', 'ASC']], // sort the todos in ascending order of priority
         }).then(
             todos => {
-                res.status.send({ // send the todos and a success message if the promise resolves
+                res.status(200).send({ // send the todos and a success message if the promise resolves
                     todos: todos,
                     msg: 'your todos have been accessed sucessfully '
                 })

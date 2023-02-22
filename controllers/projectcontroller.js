@@ -79,7 +79,7 @@ router.delete('/deleteproject/:id', validateJWT, async (req, res) => {
         })
 
         res.status(200).send({
-            msg: `${projectName} has been deleted`
+            msg: `project has been deleted`
         })
     } catch (err) {
         res.status(500).send({
