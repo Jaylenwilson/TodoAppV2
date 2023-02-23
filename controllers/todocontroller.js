@@ -112,7 +112,7 @@ router.delete('/complete/:id', validateJWT, async (req, res) => {
         })
         // If the deletion is successful, return a success status code and message
         res.status(200).send({
-            msg: `${title} completed`
+            msg: `Task completed`
         })
     } catch (err) {
         // If there is an error with the deletion, return an error status code and message
@@ -132,17 +132,20 @@ router.delete('/complete/:id', validateJWT, async (req, res) => {
 router.put('/edit/:id', validateJWT, async (req, res) => {
 
     // Destructure the request body to get the new task details (title, description and priority) from req.body.todo.
-    const { title, description, priority } = req.body.todo
+    const { title, description, priority, completed, dueDate, projectId } = req.body.todo
 
     // Get the id from the request params to identify the task to be updated.
-    const id = rq.params.id
+    const id = req.params.id
 
     try {
         // Update the task with the given id using the Sequelize update() method. 
         const editedTodo = await models.TodoModel.update({
             title: title,
             description: description,
-            priority: priority
+            priority: priority,
+            dueDate: dueDate ? new Date(dueDate).toISOString() : null,
+            projectId: projectId
+
         },
             {
                 where: {
@@ -152,7 +155,7 @@ router.put('/edit/:id', validateJWT, async (req, res) => {
 
         // If the update is successful, send a success response with the edited task and a success message.
         res.status(200).send({
-            msg: `${editedTodo.title} edited successfully`,
+            msg: `${editedTodo} edited successfully`,
             editedTodo: editedTodo
         })
 
