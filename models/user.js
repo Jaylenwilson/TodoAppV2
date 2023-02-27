@@ -21,7 +21,7 @@ const User = db.define("user", {
     // A field for the username of each user. It should be a string and is required.
     username: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
 

@@ -19,7 +19,8 @@ app.use(Express.json())
 app.use(require("./middleware/headers"))
 
 // Import the controllers as a bundle through the object that we just exported in the index.js and store it in a variable called controllers allowing us to access each controller by using dot notation
-const controllers = require("./controllers")
+const controllers = require("./controllers");
+const { sequelize } = require("./models/user");
 
 // Call app.use and in the first parameter create a base URL for each controller for example the todo controllers URL will look like http://localhost:3000/todo
 // This sets up the routes for our controllers.
@@ -42,6 +43,7 @@ dbConnection.authenticate()
     .catch((err) => {
         console.log(`[Server]: server crashed. Error = ${err}`)
     })
+
 
 // dbConnection.authenticate()
 //     .then(() => dbConnection.sync({ force: true }))

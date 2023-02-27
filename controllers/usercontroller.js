@@ -64,7 +64,7 @@ router.post('/register', async (req, res) => {
 
 // POST request to login with username or email and password
 router.post('/login', async (req, res) => {
-    const { email, username, password } = req.body.user;
+    const { email, username, password, } = req.body.user;
 
     try {
         // Querying the database to find a user with email or username provided
